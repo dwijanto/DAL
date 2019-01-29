@@ -1,0 +1,9 @@
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\DAL.exe.config
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\DAL.exe
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\DAL.pdb
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\DAL.xml
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.Resources.resources
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.vbproj.GenerateResource.Cache
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.exe
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.xml
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.pdb
