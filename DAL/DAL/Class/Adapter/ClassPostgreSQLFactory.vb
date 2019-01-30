@@ -2,11 +2,16 @@
 Public Class PostgreSQLFactory
     Inherits DbFactory
 
+
     Public Overrides ReadOnly Property ConnectionString As String
         Get
             Return String.Format("host=localhost;port=5432;database=LogisticDb20150120;CommandTimeout=10000;TimeOut=1024;Userid=admin;Password=admin;")
         End Get
     End Property
+
+    Public Overloads Overrides Function CreateAdapter() As IDbDataAdapter
+        Return New NpgsqlDataAdapter
+    End Function
 
     Public Overrides Function CreateAdapter(commandText As String) As IDbDataAdapter
         Return New NpgsqlDataAdapter(New NpgsqlCommand(commandText))
@@ -41,5 +46,6 @@ Public Class PostgreSQLFactory
         If (parameter Is Nothing) Then Return Nothing
         Return CType(parameter, NpgsqlParameter).Value
     End Function
+
 End Class
 

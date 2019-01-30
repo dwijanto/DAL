@@ -1,11 +1,24 @@
 ﻿Public Class VendorModel
-    Public Shared Function GetVendors()
-        'Return DataAccess.Read(Of IDataReader)("select vendorcode::text,vendorname::text,shortname::text from vendor;", CommandType.Text, AddressOf DataAccess.OnReadAnyList1(Of Vendor), Nothing)
-        Return DataAccess.Read("select vendorcode::text,vendorname::text,shortname::text from vendor;", CommandType.Text, AddressOf DataAccess.OnReadAnyList1(Of Vendor), Nothing)
-
-        'Return DataAccess.Read(Of List(Of Vendor))("select vendorcode::text,vendorname::text,shortname::text from vendor;", CommandType.Text, AddressOf DataAccess.OnReadAnyList1(Of Vendor), Nothing)
-
+    Private DS As DataSet
+    Public Shared Function GetVendors()        
+        Return DataAccess.Read(Of List(Of Vendor))("select vendorcode::text,vendorname::text,shortname::text from vendor;", CommandType.Text, AddressOf DataAccess.OnReadAnyList(Of Vendor), Nothing)
     End Function
+
+    Public Shared Function GetDataSet()
+        Dim DS As New DataSet
+        Try
+            DS = DataAccess.GetDataSet("select vendorcode::text,vendorname::text,shortname::text from vendor;", CommandType.Text, DS, AddressOf onGetDataSet, Nothing)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+        Return DS
+    End Function
+
+    Private Shared Function onGetDataSet(ByVal DS As DataSet) As DataSet
+        DS.Tables(0).TableName = "Vendor"
+        Return DS
+    End Function
+
 End Class
 
 <Serializable()> _
