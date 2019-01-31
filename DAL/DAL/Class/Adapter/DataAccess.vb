@@ -1,7 +1,7 @@
 ﻿Imports System.Reflection
 
 Public Class DataAccess
-    Private Shared factory As DbFactory = DbFactory.GetInstance
+    Public Shared factory As DbFactory = DbFactory.GetInstance
 
     Public Shared Function GetDataSet(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal DS As DataSet, ByVal handler As GetEventHandler, ByVal ParamArray parameters() As IDbDataParameter) As DataSet
         Dim myret As Boolean = False

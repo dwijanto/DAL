@@ -1,4 +1,7 @@
-﻿Public MustInherit Class DbFactory
+﻿Imports Npgsql
+Imports System.Data.Common
+
+Public MustInherit Class DbFactory
     Public Shared myInstance As DbFactory
 
     Public Shared Function CreatePostgresqlFactory() As DbFactory
@@ -29,7 +32,14 @@ End Class
 Public Delegate Sub WriteEventHandler(Of T)(ByVal o As T, ByVal command As IDbCommand)
 Public Delegate Function ReadEventHandler(Of T)(ByVal reader As IDataReader) As T
 Public Delegate Function GetEventHandler(ByVal DS As Dataset) As Dataset
-
+Public Delegate Sub ProgressReportDelegate(ByVal id As Integer, ByVal message As String)
+Public Enum ProgressReportEnum
+    SetMessage1 = 1
+    SetMessage2 = 2
+    SetDataGridView = 4
+    StartProgressBar = 5
+    StopProgressBar = 6
+End Enum
 
 
 

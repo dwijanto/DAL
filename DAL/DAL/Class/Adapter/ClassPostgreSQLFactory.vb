@@ -2,7 +2,6 @@
 Public Class PostgreSQLFactory
     Inherits DbFactory
 
-
     Public Overrides ReadOnly Property ConnectionString As String
         Get
             Return String.Format("host=localhost;port=5432;database=LogisticDb20150120;CommandTimeout=10000;TimeOut=1024;Userid=admin;Password=admin;")
@@ -10,7 +9,9 @@ Public Class PostgreSQLFactory
     End Property
 
     Public Overloads Overrides Function CreateAdapter() As IDbDataAdapter
-        Return New NpgsqlDataAdapter
+        Dim myadapter = New NpgsqlDataAdapter
+        AddHandler myadapter.RowUpdated, AddressOf onRowUpdate
+        Return myadapter
     End Function
 
     Public Overrides Function CreateAdapter(commandText As String) As IDbDataAdapter
@@ -46,6 +47,11 @@ Public Class PostgreSQLFactory
         If (parameter Is Nothing) Then Return Nothing
         Return CType(parameter, NpgsqlParameter).Value
     End Function
+
+
+    Private Sub onRowUpdate(sender As Object, e As NpgsqlRowUpdatedEventArgs)
+        Throw New NotImplementedException
+    End Sub
 
 End Class
 
