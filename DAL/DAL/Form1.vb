@@ -6,7 +6,7 @@ Public Class Form1
 
     Private myThread As New System.Threading.Thread(AddressOf DoWork)
     Dim myController As New VendorController
-    Private myvendorbs As BindingSource
+
     Dim myhandle As LoadDataEventHandler
 
     Private Enum SourceTypeEnum
@@ -42,12 +42,14 @@ Public Class Form1
         Try
             ProgressReport(ProgressReportEnum.StartProgressBar, "Loading Data...")
             Dim myvendor = myhandle()
-            myvendorbs = New BindingSource
+            'myvendorbs = New BindingSource
+            myController.BS = New BindingSource
             Select Case SourceType
                 Case SourceTypeEnum.ListOf
-                    myvendorbs.DataSource = DirectCast(myvendor, List(Of VendorModel))
+                    myController.BS.DataSource = DirectCast(myvendor, List(Of VendorModel))
                 Case SourceTypeEnum.DataSet
-                    myvendorbs.DataSource = DirectCast(myvendor, DataSet).Tables("Vendor")
+                    'myvendorbs.DataSource = DirectCast(myvendor, DataSet).Tables("Vendor")
+                    myController.BS.DataSource = DirectCast(myvendor, DataSet).Tables("Vendor")
             End Select
             ProgressReport(ProgressReportEnum.SetDataGridView, "Init Data")
         Catch ex As Exception
@@ -70,7 +72,7 @@ Public Class Form1
                 Case ProgressReportEnum.SetDataGridView
                     ProgressReport(ProgressReportEnum.SetMessage1, message)
                     DataGridView1.AutoGenerateColumns = False
-                    DataGridView1.DataSource = myvendorbs
+                    DataGridView1.DataSource = myController.BS
                 Case ProgressReportEnum.StartProgressBar
                     ProgressReport(ProgressReportEnum.SetMessage1, message)
                     ToolStripProgressBar1.Style = ProgressBarStyle.Continuous
@@ -81,4 +83,8 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Me.Validate()
+        myController.save()
+    End Sub
 End Class

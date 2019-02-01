@@ -7,10 +7,10 @@ Public Class DataAccess
         Dim myret As Boolean = False
         Debug.Assert(handler <> Nothing)
 
-        Using connection As IDbConnection = factory.CreateConnection(factory.ConnectionString)
+        Using connection As IDbConnection = factory.CreateConnection()
             Dim DataAdapter As IDbDataAdapter = factory.CreateAdapter
             connection.Open()
-            Dim command As IDbCommand = factory.CreateCommand(procedureName)
+            Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
             command.Connection = connection
             command.CommandType = cmdType
             DataAdapter.SelectCommand = command
@@ -27,9 +27,9 @@ Public Class DataAccess
     End Function
     Public Shared Function Read(Of T)(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal handler As ReadEventHandler(Of T), ByVal ParamArray parameters() As IDbDataParameter) As T
         Debug.Assert(handler <> Nothing)
-        Using connection As IDbConnection = factory.CreateConnection(factory.ConnectionString)
+        Using connection As IDbConnection = factory.CreateConnection()
             connection.Open()
-            Dim command As IDbCommand = factory.CreateCommand(procedureName)
+            Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
             command.Connection = connection
             command.CommandType = cmdType
 
@@ -48,7 +48,7 @@ Public Class DataAccess
     End Function
 
     Public Shared Sub Write(Of T)(ByVal o As T, ByVal procedurename As String, ByVal handler As WriteEventHandler(Of T), ByVal conn As IDbConnection, ByVal params() As IDbDataParameter)
-        Using connection As IDbConnection = factory.CreateConnection(factory.ConnectionString)
+        Using connection As IDbConnection = factory.CreateConnection()
             connection.Open()
             Write(o, procedurename, handler, connection, Nothing, params)
         End Using
@@ -56,9 +56,8 @@ Public Class DataAccess
 
     Public Shared Sub Write(Of T)(ByVal o As T, ByVal procedureName As String, ByVal handler As WriteEventHandler(Of T), ByVal connection As IDbConnection, ByVal transaction As IDbTransaction, ByVal params() As IDbDataParameter)
 
-        Dim command As IDbCommand = factory.CreateCommand(procedureName)
-        command.CommandType = CommandType.StoredProcedure
-        command.Connection = connection
+        Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
+        command.CommandType = CommandType.StoredProcedure      
         command.Transaction = transaction
 
         If (params Is Nothing = False) Then

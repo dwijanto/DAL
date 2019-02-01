@@ -32,6 +32,7 @@ Partial Class Form1
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
+        Me.Button3 = New System.Windows.Forms.Button()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -47,15 +48,12 @@ Partial Class Form1
         '
         'DataGridView1
         '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToOrderColumns = True
         Me.DataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         Me.DataGridView1.ColumnHeadersHeight = 35
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.vendorcode, Me.vendorname, Me.shortname})
         Me.DataGridView1.Location = New System.Drawing.Point(127, 12)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.Size = New System.Drawing.Size(609, 214)
         Me.DataGridView1.TabIndex = 1
         '
@@ -64,7 +62,6 @@ Partial Class Form1
         Me.vendorcode.DataPropertyName = "vendorcode"
         Me.vendorcode.HeaderText = "Vendor Code"
         Me.vendorcode.Name = "vendorcode"
-        Me.vendorcode.ReadOnly = True
         Me.vendorcode.Width = 120
         '
         'vendorname
@@ -72,7 +69,6 @@ Partial Class Form1
         Me.vendorname.DataPropertyName = "vendorname"
         Me.vendorname.HeaderText = "Vendor Name"
         Me.vendorname.Name = "vendorname"
-        Me.vendorname.ReadOnly = True
         Me.vendorname.Width = 300
         '
         'shortname
@@ -80,7 +76,6 @@ Partial Class Form1
         Me.shortname.DataPropertyName = "shortname"
         Me.shortname.HeaderText = "Short Name"
         Me.shortname.Name = "shortname"
-        Me.shortname.ReadOnly = True
         Me.shortname.Width = 120
         '
         'Button2
@@ -117,11 +112,21 @@ Partial Class Form1
         Me.ToolStripProgressBar1.Name = "ToolStripProgressBar1"
         Me.ToolStripProgressBar1.Size = New System.Drawing.Size(100, 16)
         '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(12, 104)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(103, 40)
+        Me.Button3.TabIndex = 4
+        Me.Button3.Text = "Commit To Db"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(786, 321)
+        Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.DataGridView1)
@@ -145,5 +150,6 @@ Partial Class Form1
     Friend WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel2 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripProgressBar1 As System.Windows.Forms.ToolStripProgressBar
+    Friend WithEvents Button3 As System.Windows.Forms.Button
 
 End Class
