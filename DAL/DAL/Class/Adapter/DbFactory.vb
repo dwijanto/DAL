@@ -5,7 +5,7 @@
         Return New PostgreSQLFactory
     End Function
 
-    Public Shared Function GetInstance() As DbFactory
+    Public Shared Function GetInstancePostgreSQLFactory() As DbFactory
         If IsNothing(myInstance) Then
             myInstance = New PostgreSQLFactory
         End If

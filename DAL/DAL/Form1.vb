@@ -41,14 +41,12 @@ Public Class Form1
     Sub DoWork()
         Try
             ProgressReport(ProgressReportEnum.StartProgressBar, "Loading Data...")
-            Dim myvendor = myhandle()
-            'myvendorbs = New BindingSource
+            Dim myvendor = myhandle()            
             myController.BS = New BindingSource
             Select Case SourceType
                 Case SourceTypeEnum.ListOf
                     myController.BS.DataSource = DirectCast(myvendor, List(Of VendorModel))
-                Case SourceTypeEnum.DataSet
-                    'myvendorbs.DataSource = DirectCast(myvendor, DataSet).Tables("Vendor")
+                Case SourceTypeEnum.DataSet                    
                     myController.BS.DataSource = DirectCast(myvendor, DataSet).Tables("Vendor")
             End Select
             ProgressReport(ProgressReportEnum.SetDataGridView, "Init Data")
@@ -86,5 +84,20 @@ Public Class Form1
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Me.Validate()
         myController.save()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Dim sqlstr = "update vendor set shortname = :ishortname where vendorcode = :ivendorcode;"
+        Dim params(1) As IDbDataParameter
+        params(0) = DataAccess.factory.CreateParameter("ishortname", "myshortname")
+        params(1) = DataAccess.factory.CreateParameter("ivendorcode", 8026031)
+        DataAccess.ExecuteNonQuery(sqlstr, CommandType.Text, params)
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Dim sqlstr = "select shortname from vendor where vendorcode = :ivendorcode;"
+        Dim params(0) As IDbDataParameter        
+        params(0) = DataAccess.factory.CreateParameter("ivendorcode", 8026031)
+        Dim shortname As String = DataAccess.ExecuteScalar(sqlstr, CommandType.Text, params)
     End Sub
 End Class

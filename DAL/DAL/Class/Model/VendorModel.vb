@@ -50,16 +50,9 @@ Public Class VendorModel
         Return DS
     End Function
 
-    'This function is not ready yet. 
-    'Public Function Save()
-    '    Dim dataadapter = DataAccess.factory.CreateAdapter
-
-    '    Return True
-    'End Function
-
     Public Function save(obj As Object, mye As ContentBaseEventArgs) As Boolean
 
-        Dim myret As Boolean = False        
+        Dim myret As Boolean = False
         Dim mytransaction As IDbTransaction
         Dim factory = DataAccess.factory
         Using conn As Object = factory.CreateConnection

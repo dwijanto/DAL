@@ -1,7 +1,47 @@
 ﻿Imports System.Reflection
 
 Public Class DataAccess
-    Public Shared factory As DbFactory = DbFactory.GetInstance
+    Public Shared factory As DbFactory = DbFactory.GetInstancePostgreSQLFactory
+
+    Public Shared Function ExecuteNonQuery(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal ParamArray parameters() As IDbDataParameter) As Integer
+        Debug.Assert(procedureName <> Nothing)
+        Dim myret As Object = Nothing
+        Using connection As IDbConnection = factory.CreateConnection()
+            Dim DataAdapter As IDbDataAdapter = factory.CreateAdapter
+            connection.Open()
+            Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
+            command.Connection = connection
+            command.CommandType = cmdType          
+            If (Not IsNothing(parameters)) Then
+                Dim p As IDbDataParameter
+                For Each p In parameters
+                    command.Parameters.Add(p)
+                Next
+            End If
+            myret = command.ExecuteNonQuery
+        End Using
+        Return myret
+    End Function
+
+    Public Shared Function ExecuteScalar(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal ParamArray parameters() As IDbDataParameter) As Object
+        Debug.Assert(procedureName <> Nothing)
+        Dim myret As Object = Nothing
+        Using connection As IDbConnection = factory.CreateConnection()
+            Dim DataAdapter As IDbDataAdapter = factory.CreateAdapter
+            connection.Open()
+            Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
+            command.Connection = connection
+            command.CommandType = cmdType
+            If (Not IsNothing(parameters)) Then
+                Dim p As IDbDataParameter
+                For Each p In parameters
+                    command.Parameters.Add(p)
+                Next
+            End If
+            myret = command.ExecuteScalar
+        End Using
+        Return myret
+    End Function
 
     Public Shared Function GetDataSet(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal DS As DataSet, ByVal handler As GetEventHandler, ByVal ParamArray parameters() As IDbDataParameter) As DataSet
         Dim myret As Boolean = False
@@ -15,7 +55,7 @@ Public Class DataAccess
             command.CommandType = cmdType
             DataAdapter.SelectCommand = command
 
-            If (parameters Is Nothing = False) Then
+            If (Not IsNothing(parameters)) Then
                 Dim p As IDbDataParameter
                 For Each p In parameters
                     command.Parameters.Add(p)
@@ -25,6 +65,7 @@ Public Class DataAccess
             Return handler(DS)
         End Using
     End Function
+
     Public Shared Function Read(Of T)(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal handler As ReadEventHandler(Of T), ByVal ParamArray parameters() As IDbDataParameter) As T
         Debug.Assert(handler <> Nothing)
         Using connection As IDbConnection = factory.CreateConnection()

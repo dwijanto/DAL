@@ -33,6 +33,8 @@ Partial Class Form1
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -121,11 +123,31 @@ Partial Class Form1
         Me.Button3.Text = "Commit To Db"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(12, 167)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(103, 40)
+        Me.Button4.TabIndex = 5
+        Me.Button4.Text = "ExecuteNonQuery"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'Button5
+        '
+        Me.Button5.Location = New System.Drawing.Point(12, 213)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(103, 40)
+        Me.Button5.TabIndex = 6
+        Me.Button5.Text = "ExecuteScalar"
+        Me.Button5.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(786, 321)
+        Me.Controls.Add(Me.Button5)
+        Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Button2)
@@ -151,5 +173,7 @@ Partial Class Form1
     Friend WithEvents ToolStripStatusLabel2 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripProgressBar1 As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents Button5 As System.Windows.Forms.Button
 
 End Class
