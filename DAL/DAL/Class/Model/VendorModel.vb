@@ -1,4 +1,22 @@
-﻿'Imports Npgsql
+﻿'-- Table: vendor
+
+'-- DROP TABLE vendor;
+
+'CREATE TABLE vendor
+'(
+'  vendorname character varying,
+'  vendorcode bigint NOT NULL,
+'  shortname character varying,
+'  CONSTRAINT vendorcode PRIMARY KEY (vendorcode),
+')
+'WITH (
+'  OIDS=FALSE
+');
+'ALTER TABLE vendor
+'  OWNER TO postgres;
+'GRANT ALL ON TABLE vendor TO postgres;
+'GRANT ALL ON TABLE vendor TO public;
+
 <Serializable()> _
 Public Class VendorModel
     Private DS As DataSet
@@ -26,7 +44,7 @@ Public Class VendorModel
                                                         Nothing)
     End Function
 
-    'this function populate list of vendormodel based on custom field
+    'this function populate list of vendormodel based on custom fields
     Function GetVendorsCustom() As List(Of VendorModel)
         Return DataAccess.Read(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;",
                                                         CommandType.Text,
@@ -52,7 +70,7 @@ Public Class VendorModel
 
     Public Function GetDataSet(Optional ByVal Criteria As String = "") As DataSet
         Dim DS As DataSet = Nothing
-        Dim sqlstr As String = String.Format("select vendorcode1::text,vendorname::text,shortname::text from vendor {0};", Criteria)
+        Dim sqlstr As String = String.Format("select vendorcode::text,vendorname::text,shortname::text from vendor {0};", Criteria)
         DS = DataAccess.GetDataSet(sqlstr, CommandType.Text, Nothing)
         DS.Tables(0).TableName = TableName        
         Return DS
@@ -60,7 +78,6 @@ Public Class VendorModel
 
 
     Public Function save(obj As Object, mye As ContentBaseEventArgs) As Boolean
-
         Dim myret As Boolean = False
         Dim mytransaction As IDbTransaction
         Dim factory = DataAccess.factory
@@ -113,9 +130,8 @@ Public Class VendorModel
         End Using
         Return myret
     End Function
-
-
-
-
 End Class
+
+
+
 

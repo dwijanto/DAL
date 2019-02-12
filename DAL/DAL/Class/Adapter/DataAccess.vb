@@ -2,6 +2,7 @@
 
 Public Class DataAccess
     Public Shared factory As DbFactory = DbFactory.GetInstancePostgreSQLFactory
+    'Public Shared factory As DbFactory = DbFactory.GetInstanceSQLFactory
 
     Public Shared Function ExecuteNonQuery(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal ParamArray parameters() As IDbDataParameter) As Integer
         Debug.Assert(procedureName <> Nothing)
@@ -112,8 +113,6 @@ Public Class DataAccess
         End If
     End Sub
 
-  
-
     'populate model, return List of model
     Public Shared Function OnReadAnyList(Of T As New)(ByVal reader As IDataReader) As List(Of T)
         If (reader Is Nothing) Then Return New List(Of T)()
@@ -124,7 +123,6 @@ Public Class DataAccess
 
         Return list
     End Function
-
 
     ' read the public properties and use these to read field names
     Public Shared Function OnReadAny(Of T As New)(ByVal reader As IDataReader) As T

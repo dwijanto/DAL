@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Adapter\ClassPostgreSQLFactory.vb" />
+    <Compile Include="Class\Adapter\ClassSqlFactory.vb" />
     <Compile Include="Class\Adapter\DbFactory.vb" />
     <Compile Include="Class\Adapter\DataAccess.vb" />
     <Compile Include="Class\Controller\VendorController.vb" />

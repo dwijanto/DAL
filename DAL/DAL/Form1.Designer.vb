@@ -107,7 +107,7 @@ Partial Class Form1
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(669, 17)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(638, 17)
         Me.ToolStripStatusLabel2.Spring = True
         '
         'ToolStripProgressBar1

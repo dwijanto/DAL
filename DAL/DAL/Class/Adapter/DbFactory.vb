@@ -12,6 +12,12 @@
         Return myInstance
     End Function
 
+    Public Shared Function GetInstanceSQLFactory() As DbFactory
+        If IsNothing(myInstance) Then
+            myInstance = New SQLFactory
+        End If
+        Return myInstance
+    End Function
     Public Shared Function CreateSQLFactory() As DbFactory
         Return New PostgreSQLFactory
     End Function
