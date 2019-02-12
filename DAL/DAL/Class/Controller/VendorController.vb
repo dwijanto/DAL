@@ -5,7 +5,9 @@
     Public Function getVendors() As List(Of VendorModel)
         Return Model.GetVendors
     End Function
-
+    Public Function getVendorsCustom() As List(Of VendorModel)
+        Return Model.GetVendorsCustom
+    End Function
     Public Function GetDataset() As DataSet
         DS = Model.GetDataSet
         Return DS

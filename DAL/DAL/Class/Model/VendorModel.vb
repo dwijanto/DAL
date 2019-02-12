@@ -18,37 +18,46 @@ Public Class VendorModel
         Me.Shortname = _shortname
     End Sub
 
+    'this function populate list of VendorModel based on public property of this model.
     Public Function GetVendors() As List(Of VendorModel)
-        Return DataAccess.Read(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;", CommandType.Text, AddressOf DataAccess.OnReadAnyList(Of VendorModel), Nothing)
+        Return DataAccess.Read(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;",
+                                                        CommandType.Text,
+                                                        AddressOf DataAccess.OnReadAnyList(Of VendorModel),
+                                                        Nothing)
     End Function
 
-    Public Function GetDataSet() As DataSet
-        Dim DS As New DataSet
-        Try
+    'this function populate list of vendormodel based on custom field
+    Function GetVendorsCustom() As List(Of VendorModel)
+        Return DataAccess.Read(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;",
+                                                        CommandType.Text,
+                                                        AddressOf onReadVendors,
+                                                        Nothing)
+    End Function
 
-            DS = DataAccess.GetDataSet("select vendorcode::text,vendorname::text,shortname::text from vendor;", CommandType.Text, DS, AddressOf onGetDataSet, Nothing)
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-        Return DS
+    Private Function onReadVendors(ByVal reader As IDataReader) As List(Of VendorModel)
+        If (IsNothing(reader)) Then Return New List(Of VendorModel)
+        Dim VendorModels As List(Of VendorModel) = New List(Of VendorModel)
+        While (reader.Read)
+            VendorModels.Add(onReadVendor(reader))
+        End While
+        Return VendorModels
+    End Function
+
+    Private Function onReadVendor(ByVal reader As IDataReader) As VendorModel
+        Debug.Assert(Not IsNothing(reader))
+        Return New VendorModel With {.VendorCode = DataAccess.SafeRead(Of String)(VendorCode, reader, "vendorcode"),
+                                     .VendorName = DataAccess.SafeRead(Of String)(VendorName, reader, "vendorname"),
+                                     .Shortname = DataAccess.SafeRead(Of String)(Shortname, reader, "shortname")}
     End Function
 
     Public Function GetDataSet(Optional ByVal Criteria As String = "") As DataSet
-        Dim DS As New DataSet
-        Try
-            Dim sqlstr As String = String.Format("select vendorcode::text,vendorname::text,shortname::text from vendor {0};", Criteria)
-            DS = DataAccess.GetDataSet(sqlstr, CommandType.Text, DS, AddressOf onGetDataSet, Nothing)
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+        Dim DS As DataSet = Nothing
+        Dim sqlstr As String = String.Format("select vendorcode1::text,vendorname::text,shortname::text from vendor {0};", Criteria)
+        DS = DataAccess.GetDataSet(sqlstr, CommandType.Text, Nothing)
+        DS.Tables(0).TableName = TableName        
         Return DS
     End Function
 
-    'This function for adding more function, such as Primary Key, Set Table Name etc, related to this model
-    Private Function onGetDataSet(ByVal DS As DataSet) As DataSet
-        DS.Tables(0).TableName = TableName
-        Return DS
-    End Function
 
     Public Function save(obj As Object, mye As ContentBaseEventArgs) As Boolean
 
@@ -58,12 +67,10 @@ Public Class VendorModel
         Using conn As Object = factory.CreateConnection
             conn.Open()
             mytransaction = conn.BeginTransaction
-            'Dim dataadapter = DirectCast(DataAccess.factory.CreateAdapter, NpgsqlDataAdapter)
             Dim dataadapter = factory.CreateAdapter
             Dim sqlstr As String
             sqlstr = "sp_deletevendortx"
             dataadapter.DeleteCommand = factory.CreateCommand(sqlstr, conn)
-            'dataadapter.DeleteCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Bigint, 0, "id").SourceVersion = DataRowVersion.Original
             dataadapter.DeleteCommand.Parameters.Add(factory.CreateParameter("ivendorcode", DbType.Int64, 0, "vendorcode"))
             dataadapter.DeleteCommand.Parameters(0).SourceVersion = DataRowVersion.Original
             dataadapter.DeleteCommand.CommandType = CommandType.StoredProcedure
@@ -106,6 +113,9 @@ Public Class VendorModel
         End Using
         Return myret
     End Function
+
+
+
 
 End Class
 

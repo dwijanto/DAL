@@ -31,7 +31,11 @@ Public Class Form1
         SourceType = SourceTypeEnum.ListOf
         LoadData()
     End Sub
-
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        myhandle = AddressOf myController.getVendorsCustom
+        SourceType = SourceTypeEnum.ListOf
+        LoadData()
+    End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         myhandle = AddressOf myController.GetDataset
         SourceType = SourceTypeEnum.DataSet
@@ -51,7 +55,8 @@ Public Class Form1
             End Select
             ProgressReport(ProgressReportEnum.SetDataGridView, "Init Data")
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            ' MessageBox.Show(ex.Message)
+            ProgressReport(ProgressReportEnum.SetMessage2, ex.Message)
         Finally
             ProgressReport(ProgressReportEnum.StopProgressBar, "Done.")
         End Try
@@ -73,10 +78,10 @@ Public Class Form1
                     DataGridView1.DataSource = myController.BS
                 Case ProgressReportEnum.StartProgressBar
                     ProgressReport(ProgressReportEnum.SetMessage1, message)
-                    ToolStripProgressBar1.Style = ProgressBarStyle.Continuous
+                    ToolStripProgressBar1.Style = ProgressBarStyle.Marquee
                 Case ProgressReportEnum.StopProgressBar
                     ProgressReport(ProgressReportEnum.SetMessage1, message)
-                    ToolStripProgressBar1.Style = ProgressBarStyle.Marquee
+                    ToolStripProgressBar1.Style = ProgressBarStyle.Continuous
             End Select
         End If
     End Sub
@@ -100,4 +105,6 @@ Public Class Form1
         params(0) = DataAccess.factory.CreateParameter("ivendorcode", 8026031)
         Dim shortname As String = DataAccess.ExecuteScalar(sqlstr, CommandType.Text, params)
     End Sub
+
+   
 End Class

@@ -43,9 +43,10 @@ Public Class DataAccess
         Return myret
     End Function
 
-    Public Shared Function GetDataSet(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal DS As DataSet, ByVal handler As GetEventHandler, ByVal ParamArray parameters() As IDbDataParameter) As DataSet
-        Dim myret As Boolean = False
-        Debug.Assert(handler <> Nothing)
+    Public Shared Function GetDataSet(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal ParamArray parameters() As IDbDataParameter) As DataSet
+        Dim DS As DataSet = New DataSet
+        'Debug.Assert(handler <> Nothing)
+        Debug.Assert(procedureName <> Nothing)
 
         Using connection As IDbConnection = factory.CreateConnection()
             Dim DataAdapter As IDbDataAdapter = factory.CreateAdapter
@@ -62,7 +63,8 @@ Public Class DataAccess
                 Next
             End If
             DataAdapter.Fill(DS)
-            Return handler(DS)
+            'Return handler(DS)
+            Return DS
         End Using
     End Function
 
@@ -96,24 +98,61 @@ Public Class DataAccess
     End Sub
 
     Public Shared Sub Write(Of T)(ByVal o As T, ByVal procedureName As String, ByVal handler As WriteEventHandler(Of T), ByVal connection As IDbConnection, ByVal transaction As IDbTransaction, ByVal params() As IDbDataParameter)
-
         Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
         command.CommandType = CommandType.StoredProcedure      
         command.Transaction = transaction
-
         If (params Is Nothing = False) Then
             Dim p As IDbDataParameter
             For Each p In params
                 command.Parameters.Add(p)
             Next
-
         End If
-
         If (handler <> Nothing) Then
             handler(o, command)
         End If
-
     End Sub
+
+  
+
+    'populate model, return List of model
+    Public Shared Function OnReadAnyList(Of T As New)(ByVal reader As IDataReader) As List(Of T)
+        If (reader Is Nothing) Then Return New List(Of T)()
+        Dim list As List(Of T) = New List(Of T)()
+        While (reader.Read())
+            list.Add(OnReadAny(Of T)(reader))
+        End While
+
+        Return list
+    End Function
+
+
+    ' read the public properties and use these to read field names
+    Public Shared Function OnReadAny(Of T As New)(ByVal reader As IDataReader) As T
+
+        Dim genericType As Type = GetType(T)
+
+        Dim properties() As PropertyInfo = genericType.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
+
+        Dim prop As PropertyInfo
+        Dim model As T = New T()
+
+        For Each prop In properties
+
+            Try
+                Dim columnName As String = GetColumnName(prop)
+
+                If (reader(columnName).Equals(System.DBNull.Value) = False) Then
+                    Dim value As Object = reader(columnName)
+                    prop.SetValue(model, value, Nothing)
+                End If
+
+            Catch ex As Exception
+                Debug.WriteLine("Couldn't write " + prop.Name)
+            End Try
+
+        Next
+        Return model
+    End Function
 
     Private Shared Function GetColumnName(ByVal prop As PropertyInfo) As String
 
@@ -133,43 +172,12 @@ Public Class DataAccess
 
     End Function
 
-
-    ' read the public properties and use these to read field names
-    Public Shared Function OnReadAny(Of T As New)(ByVal reader As IDataReader) As T
-
-        Dim genericType As Type = GetType(T)
-
-        Dim properties() As PropertyInfo = genericType.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
-
-        Dim prop As PropertyInfo
-        Dim obj As T = New T()
-
-        For Each prop In properties
-
-            Try
-                Dim columnName As String = GetColumnName(prop)
-
-                If (reader(columnName).Equals(System.DBNull.Value) = False) Then
-                    Dim value As Object = reader(columnName)
-                    prop.SetValue(obj, value, Nothing)
-                End If
-
-            Catch ex As Exception
-                Debug.WriteLine("Couldn't write " + prop.Name)
-            End Try
-
-        Next
-        Return obj
+    Public Shared Function SafeRead(Of T)(ByVal field As T, ByVal reader As IDataReader, ByVal name As String) As T
+        If (reader(name).Equals(System.DBNull.Value) = False) Then
+            Dim result As Object = reader(name)
+            Return CType(Convert.ChangeType(result, GetType(T)), T)
+        Else
+            Return field
+        End If
     End Function
-
-    Public Shared Function OnReadAnyList(Of T As New)(ByVal reader As IDataReader) As List(Of T)
-        If (reader Is Nothing) Then Return New List(Of T)()
-        Dim list As List(Of T) = New List(Of T)()
-        While (reader.Read())
-            list.Add(OnReadAny(Of T)(reader))
-        End While
-
-        Return list
-    End Function
-
 End Class
