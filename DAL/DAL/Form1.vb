@@ -97,6 +97,7 @@ Public Class Form1
         params(0) = DataAccess.factory.CreateParameter("ishortname", "myshortname")
         params(1) = DataAccess.factory.CreateParameter("ivendorcode", 8026031)
         DataAccess.ExecuteNonQuery(sqlstr, CommandType.Text, params)
+
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
@@ -104,7 +105,11 @@ Public Class Form1
         Dim params(0) As IDbDataParameter        
         params(0) = DataAccess.factory.CreateParameter("ivendorcode", 8026031)
         Dim shortname As String = DataAccess.ExecuteScalar(sqlstr, CommandType.Text, params)
+
     End Sub
 
    
+    Private Sub Button7_Click(sender As Object, e As EventArgs)
+
+    End Sub
 End Class
