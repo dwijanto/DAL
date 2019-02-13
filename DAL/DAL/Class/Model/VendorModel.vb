@@ -81,7 +81,7 @@ Public Class VendorModel
         Dim myret As Boolean = False
         Dim mytransaction As IDbTransaction
         Dim factory = DataAccess.factory
-        Using conn As Object = factory.CreateConnection
+        Using conn As IDbConnection = factory.CreateConnection
             conn.Open()
             mytransaction = conn.BeginTransaction
             Dim dataadapter = factory.CreateAdapter
@@ -101,7 +101,6 @@ Public Class VendorModel
             dataadapter.InsertCommand.Parameters.Add(factory.CreateParameter("ishortname", DbType.String, 0, "shortname"))
             dataadapter.InsertCommand.Parameters(2).SourceVersion = DataRowVersion.Current
             dataadapter.InsertCommand.Parameters(2).Direction = ParameterDirection.InputOutput
-
             dataadapter.InsertCommand.CommandType = CommandType.StoredProcedure
 
             sqlstr = "sp_updatevendor"
@@ -114,7 +113,6 @@ Public Class VendorModel
             dataadapter.UpdateCommand.Parameters(2).SourceVersion = DataRowVersion.Current
             dataadapter.UpdateCommand.Parameters.Add(factory.CreateParameter("ishortname", DbType.String, 0, "shortname"))
             dataadapter.UpdateCommand.Parameters(3).SourceVersion = DataRowVersion.Current
-
             dataadapter.UpdateCommand.CommandType = CommandType.StoredProcedure
 
             dataadapter.InsertCommand.Transaction = mytransaction
