@@ -74,17 +74,40 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\Adapter\ActiveRecord.vb" />
     <Compile Include="Class\Adapter\ClassPostgreSQLFactory.vb" />
     <Compile Include="Class\Adapter\ClassSqlFactory.vb" />
     <Compile Include="Class\Adapter\DbFactory.vb" />
     <Compile Include="Class\Adapter\DataAccess.vb" />
+    <Compile Include="Class\Controller\UserController.vb" />
     <Compile Include="Class\Controller\VendorController.vb" />
+    <Compile Include="Class\Interface\IActiveRecord.vb" />
+    <Compile Include="Class\Interface\IController.vb" />
+    <Compile Include="Class\Interface\IModel.vb" />
+    <Compile Include="Class\Interface\IToolbarAction.vb" />
+    <Compile Include="Class\Model\UserModel.vb" />
     <Compile Include="Class\Model\VendorModel.vb" />
+    <Compile Include="Class\RBAC\Assignment.vb" />
+    <Compile Include="Class\RBAC\BaseManager.vb" />
+    <Compile Include="Class\RBAC\DbManager.vb" />
+    <Compile Include="Class\RBAC\IIdentity.vb" />
+    <Compile Include="Class\RBAC\IManager.vb" />
+    <Compile Include="Class\RBAC\Item.vb" />
+    <Compile Include="Class\RBAC\Permission.vb" />
+    <Compile Include="Class\RBAC\Role.vb" />
+    <Compile Include="Class\RBAC\Rule.vb" />
+    <Compile Include="Class\RBAC\User.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormRBAC.Designer.vb">
+      <DependentUpon>FormRBAC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormRBAC.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -106,6 +129,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormRBAC.resx">
+      <DependentUpon>FormRBAC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

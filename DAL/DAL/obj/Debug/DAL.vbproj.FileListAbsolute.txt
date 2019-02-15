@@ -18,3 +18,4 @@ C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\fi\Npgsql.resources.dll
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\fr\Npgsql.resources.dll
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\ja\Npgsql.resources.dll
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\zh-CN\Npgsql.resources.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.FormRBAC.resources
