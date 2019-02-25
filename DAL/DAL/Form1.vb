@@ -8,7 +8,7 @@ Public Class Form1
     Dim myController As New VendorController
 
     Dim myhandle As LoadDataEventHandler
-
+    Private myuser As UserController
     Private Enum SourceTypeEnum
         ListOf = 1
         DataSet = 2
@@ -116,5 +116,37 @@ Public Class Form1
     Private Sub Button7_Click_1(sender As Object, e As EventArgs) Handles Button7.Click
         Dim myform = New FormRBAC
         myform.Show()
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click     
+        If User.can("View APO HK") Then
+            MessageBox.Show("Can View")
+        Else
+            MessageBox.Show("Cannot View")
+        End If
+
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Dim mydata As DataSet
+        Dim userid = Environment.UserDomainName & "\" & Environment.UserName
+        mydata = myuser.findByUserName(userid.ToLower)
+        If mydata.Tables(0).Rows.Count > 0 Then
+            Dim identity = myuser.findIdentity(mydata.Tables(0).Rows(0).Item("id"))
+            User.setIdentity(identity)
+            User.login(identity)
+            User.IdentityClass = myuser
+        Else
+            MessageBox.Show("User is not registered.")
+        End If
+    End Sub
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        myuser = New UserController
     End Sub
 End Class

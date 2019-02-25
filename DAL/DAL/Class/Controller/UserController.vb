@@ -119,10 +119,10 @@
 
     Private Function populatedata(dr As DataRow) As IIdentity
         Dim Identity = New UserController With {.id = dr.Item("id"),
-                                            .username = dr.Item("username"),
+                                            .username = "" & dr.Item("username"),
                                             .isAdmin = dr.Item("isadmin"),
                                             .isActive = dr.Item("isactive"),
-                                            .userid = dr.Item("userid"),
+                                            .userid = "" & dr.Item("userid"),
                                             .password_hash = ""}
         Return Identity
     End Function
