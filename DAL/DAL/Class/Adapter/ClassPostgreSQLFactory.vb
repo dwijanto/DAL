@@ -6,8 +6,8 @@ Public Class PostgreSQLFactory
 
     Public Overrides ReadOnly Property ConnectionString As String
         Get
-            Return String.Format("host=hon13-0002L;port=5432;database=LogisticDb20150120;CommandTimeout=10000;TimeOut=1024;Userid=admin;Password=admin;")
-            'Return String.Format("host=localhost;port=5432;database=LogisticDb20150120;CommandTimeout=10000;TimeOut=1024;Userid=admin;Password=admin;")
+            'Return String.Format("host=hon13-0002L;port=5432;database=LogisticDb20150120;CommandTimeout=10000;TimeOut=1024;Userid=admin;Password=admin;")
+            Return String.Format("host=localhost;port=5432;database=LogisticDb20150120;CommandTimeout=10000;TimeOut=1024;Userid=admin;Password=admin;")
         End Get
     End Property
 
