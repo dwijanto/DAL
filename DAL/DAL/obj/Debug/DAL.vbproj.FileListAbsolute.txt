@@ -9,3 +9,13 @@ C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.xml
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.pdb
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.vbprojResolveAssemblyReference.cache
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.Form1.resources
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\Npgsql.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\Npgsql.pdb
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\Npgsql.xml
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\de\Npgsql.resources.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\es\Npgsql.resources.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\fi\Npgsql.resources.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\fr\Npgsql.resources.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\ja\Npgsql.resources.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\zh-CN\Npgsql.resources.dll
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.FormRBAC.resources

@@ -35,7 +35,11 @@
     Public MustOverride ReadOnly Property ConnectionString() As String
 End Class
 
-Public Delegate Sub WriteEventHandler(Of T)(ByVal o As T, ByVal command As IDbCommand)
+'Public Delegate Sub WriteEventHandler(Of T)(ByVal o As T, ByVal command As IDbCommand)
+'Public Delegate Function WriteEventHandler(Of T)(ByVal o As T, ByVal command As IDbCommand) As T
+'Public Delegate Function WriteEventHandler(Of T)(ByVal command As IDbCommand) As T
+Public Delegate Function ExecuteEventHandler(Of T)(ByVal command As IDbCommand) As T
+'Public Delegate Function DataAdapterEventHandler(Of T)(ByVal DataAdapter As IDataAdapter) As T
 Public Delegate Function ReadEventHandler(Of T)(ByVal reader As IDataReader) As T
 Public Delegate Function GetEventHandler(ByVal DS As Dataset) As Dataset
 Public Delegate Sub ProgressReportDelegate(ByVal id As Integer, ByVal message As String)

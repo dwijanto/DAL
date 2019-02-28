@@ -7,8 +7,7 @@ Public Class DataAccess
     Public Shared Function ExecuteNonQuery(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal ParamArray parameters() As IDbDataParameter) As Integer
         Debug.Assert(procedureName <> Nothing)
         Dim myret As Object = Nothing
-        Using connection As IDbConnection = factory.CreateConnection()
-            Dim DataAdapter As IDbDataAdapter = factory.CreateAdapter
+        Using connection As IDbConnection = factory.CreateConnection()           
             connection.Open()
             Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
             command.Connection = connection
@@ -27,8 +26,7 @@ Public Class DataAccess
     Public Shared Function ExecuteScalar(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal ParamArray parameters() As IDbDataParameter) As Object
         Debug.Assert(procedureName <> Nothing)
         Dim myret As Object = Nothing
-        Using connection As IDbConnection = factory.CreateConnection()
-            Dim DataAdapter As IDbDataAdapter = factory.CreateAdapter
+        Using connection As IDbConnection = factory.CreateConnection()         
             connection.Open()
             Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
             command.Connection = connection
@@ -45,8 +43,7 @@ Public Class DataAccess
     End Function
 
     Public Shared Function GetDataSet(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal ParamArray parameters() As IDbDataParameter) As DataSet
-        Dim DS As DataSet = New DataSet
-        'Debug.Assert(handler <> Nothing)
+        Dim DS As DataSet = New DataSet      
         Debug.Assert(procedureName <> Nothing)
 
         Using connection As IDbConnection = factory.CreateConnection()
@@ -63,13 +60,12 @@ Public Class DataAccess
                     command.Parameters.Add(p)
                 Next
             End If
-            DataAdapter.Fill(DS)
-            'Return handler(DS)
+            DataAdapter.Fill(DS)          
             Return DS
         End Using
     End Function
 
-    Public Shared Function Read(Of T)(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal handler As ReadEventHandler(Of T), ByVal ParamArray parameters() As IDbDataParameter) As T
+    Public Shared Function ExecuteReader(Of T)(ByVal procedureName As String, ByVal cmdType As CommandType, ByVal handler As ReadEventHandler(Of T), ByVal ParamArray parameters() As IDbDataParameter) As T
         Debug.Assert(handler <> Nothing)
         Using connection As IDbConnection = factory.CreateConnection()
             connection.Open()
@@ -84,34 +80,11 @@ Public Class DataAccess
                 Next
             End If
 
-            Dim reader As IDataReader = command.ExecuteReader()
-            'Return handler(reader)
+            Dim reader As IDataReader = command.ExecuteReader()            
             Return handler.Invoke(reader)
         End Using
 
     End Function
-
-    Public Shared Sub Write(Of T)(ByVal o As T, ByVal procedurename As String, ByVal handler As WriteEventHandler(Of T), ByVal conn As IDbConnection, ByVal params() As IDbDataParameter)
-        Using connection As IDbConnection = factory.CreateConnection()
-            connection.Open()
-            Write(o, procedurename, handler, connection, Nothing, params)
-        End Using
-    End Sub
-
-    Public Shared Sub Write(Of T)(ByVal o As T, ByVal procedureName As String, ByVal handler As WriteEventHandler(Of T), ByVal connection As IDbConnection, ByVal transaction As IDbTransaction, ByVal params() As IDbDataParameter)
-        Dim command As IDbCommand = factory.CreateCommand(procedureName, connection)
-        command.CommandType = CommandType.StoredProcedure      
-        command.Transaction = transaction
-        If (params Is Nothing = False) Then
-            Dim p As IDbDataParameter
-            For Each p In params
-                command.Parameters.Add(p)
-            Next
-        End If
-        If (handler <> Nothing) Then
-            handler(o, command)
-        End If
-    End Sub
 
     'populate model, return List of model
     Public Shared Function OnReadAnyList(Of T As New)(ByVal reader As IDataReader) As List(Of T)
@@ -147,7 +120,6 @@ Public Class DataAccess
             Catch ex As Exception
                 Debug.WriteLine("Couldn't write " + prop.Name)
             End Try
-
         Next
         Return model
     End Function

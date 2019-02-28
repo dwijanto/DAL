@@ -38,7 +38,7 @@ Public Class VendorModel
 
     'this function populate list of VendorModel based on public property of this model.
     Public Function GetVendors() As List(Of VendorModel)
-        Return DataAccess.Read(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;",
+        Return DataAccess.ExecuteReader(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;",
                                                         CommandType.Text,
                                                         AddressOf DataAccess.OnReadAnyList(Of VendorModel),
                                                         Nothing)
@@ -46,7 +46,7 @@ Public Class VendorModel
 
     'this function populate list of vendormodel based on custom fields
     Function GetVendorsCustom() As List(Of VendorModel)
-        Return DataAccess.Read(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;",
+        Return DataAccess.ExecuteReader(Of List(Of VendorModel))("select vendorcode::text,vendorname::text,shortname::text from vendor;",
                                                         CommandType.Text,
                                                         AddressOf onReadVendors,
                                                         Nothing)
@@ -71,8 +71,8 @@ Public Class VendorModel
     Public Function GetDataSet(Optional ByVal Criteria As String = "") As DataSet
         Dim DS As DataSet = Nothing
         Dim sqlstr As String = String.Format("select vendorcode::text,vendorname::text,shortname::text from vendor {0};", Criteria)
-        DS = DataAccess.GetDataSet(sqlstr, CommandType.Text, Nothing)
-        DS.Tables(0).TableName = TableName        
+        DS = DataAccess.GetDataSet(sqlstr, CommandType.Text, Nothing)        
+        DS.Tables(0).TableName = TableName
         Return DS
     End Function
 
