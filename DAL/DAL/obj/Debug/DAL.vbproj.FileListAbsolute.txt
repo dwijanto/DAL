@@ -10,3 +10,4 @@ C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.pdb
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.vbprojResolveAssemblyReference.cache
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.Form1.resources
 C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\obj\Debug\DAL.FormRBAC.resources
+C:\Users\dlie\Documents\GitHub\DAL\DAL\DAL\bin\Debug\Npgsql.dll

@@ -159,16 +159,16 @@ Partial Class Form1
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(103, 40)
         Me.Button7.TabIndex = 8
-        Me.Button7.Text = "RBAC"
+        Me.Button7.Text = "RBAC Windows"
         Me.Button7.UseVisualStyleBackColor = True
         '
         'Button8
         '
         Me.Button8.Location = New System.Drawing.Point(236, 247)
         Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(103, 40)
+        Me.Button8.Size = New System.Drawing.Size(171, 40)
         Me.Button8.TabIndex = 9
-        Me.Button8.Text = "RBAC"
+        Me.Button8.Text = "RBAC - Can View APO HK"
         Me.Button8.UseVisualStyleBackColor = True
         '
         'Form1
